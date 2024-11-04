@@ -1,8 +1,9 @@
-const express = require('express');
+const express = require("express");
 const server = express();
-const router = require('../routers/routes');
+const router = require("../routers/routes");
 
-server.use('/', router)
+server.use(express.json());
+
+server.use("/", router);
 
 module.exports = server;
- 
