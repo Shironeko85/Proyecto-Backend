@@ -3,15 +3,19 @@ const { mongoose, Schema } = require("mongoose");
 const BookSchema = Schema({
   name: {
     type: String,
-    require: true,
+    required: true,
   },
   price: {
     type: Number,
-    require: true,
+    required: true,
   },
   description: {
     type: String,
-    require: true,
+    required: true,
+  },
+  image: {
+    type: String,
+    required: false,
   },
 });
 
