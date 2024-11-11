@@ -9,6 +9,7 @@ const {
 } = require("../controllers/controller");
 const checkBookTypes = require("../utils/checkBookTypes");
 const handleValidationErrors = require("../utils/handleValidationErrors");
+const { convertPriceController } = require("../controllers/apiController")
 
 const router = express.Router();
 
@@ -62,5 +63,8 @@ router.delete(
   deleteBookController,
   handleValidationErrors // Middleware para manejar errores de validación en DELETE
 );
+
+//RUTA API EX
+router.get('/convert-price', convertPriceController);
 
 module.exports = router;
