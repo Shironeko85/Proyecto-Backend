@@ -1,20 +1,27 @@
+const { getBookByIdService } = require('../services/services');
 const { getExchangeRate } = require('../services/apiExchangeRate');
 
-const convertPriceController = async (req, res) => {
+const getBookWithConvertedPriceController = async (req, res) => {
     try {
-        const { price } = req.query;
-        if (!price || isNaN(price)) {
-            return res.status(400).json({ error: 'Precio inválido' });
+        const { id } = req.params;
+        const bookById = await getBookByIdService(id);
+        if (!bookById) {
+            return res.status(404).json({ message: "Libro no encontrado" });
         }
         const usdRate = await getExchangeRate();
-        const convertedPrice = price * usdRate;
-        res.json({ priceInARS: price, priceInUSD: convertedPrice });
+        const convertedPrice = bookById.price * usdRate;
+        res.json({ 
+            name: bookById.name,
+            priceInARS: bookById.price,
+            priceInUSD: convertedPrice,
+            description: bookById.description,
+        });
     } catch (error) {
-        console.error('Error al convertir el precio:', error);
-        res.status(500).json({ error: 'Error al convertir el precio' });
+        console.error('Error al obtener y convertir el precio del libro:', error);
+        res.status(500).json({ error: 'Error al obtener y convertir el precio del libro' });
     }
 };
 
 module.exports = {
-    convertPriceController
+    getBookWithConvertedPriceController
 };
